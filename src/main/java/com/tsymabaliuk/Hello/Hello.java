@@ -3,6 +3,9 @@ package com.tsymabaliuk.Hello;
 import org.apache.wicket.PageParameters;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.AbstractReadOnlyModel;
+import org.apache.wicket.model.IModel;
 
 /**
  * Created by Tsymbaliuk Serhii on 05.01.2017.
@@ -10,8 +13,39 @@ import org.apache.wicket.markup.html.basic.Label;
 public class Hello extends WebPage {
     private static final long serialVersionUID = 1L;
 
-    public Hello(final PageParameters parameters) {
-        add(new Label("message", "Hello World, Wicket"));
-        add(new Label("list", "Hello World, Wicket"));
+    private int counter = 0;
+
+    public Hello() {
+        IModel<Integer> counterModel = new AbstractReadOnlyModel<Integer>() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Integer getObject() {
+                return counter;
+            }
+        };
+
+        Label label = new Label("counter", counterModel);
+        add(label);
+
+        Link<Void> link = new Link<Void>("increment") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                counter++;
+            }
+        };
+
+        Link<Void> linkDecrement = new Link<Void>("decrement") {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                counter--;
+            }
+        };
+        add(linkDecrement);
+        add(link);
     }
 }

@@ -24,7 +24,7 @@ public class Hello extends WebPage {
                 return counter;
             }
         };
-
+        // test
         Label label = new Label("counter", counterModel);
         add(label);
 
